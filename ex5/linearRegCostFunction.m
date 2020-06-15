@@ -18,11 +18,16 @@ grad = zeros(size(theta));
 %
 %               You should set J to the cost and grad to the gradient.
 %
+hX = X * theta;
+sqError = sum((hX - y) .^ 2);
+regTerm = sum(theta(2:size(theta,1), :) .^ 2);
+J = sqError/(2*m) + regTerm*(lambda/(2*m));
 
-
-
-
-
+%grad(1) = (1/m) * sum((X(:, 1))' * (hX - y));
+%grad(2:size(grad), :) = (1/m) * sum((X(:, 2:size(X, 2))')*(hX - y));
+%grad = (1/m) * sum((X(:, 2:size(X, 2))')*(hX - y));
+grad = ((1/m) * (hX - y)' * X)';
+grad(2:size(grad)) = grad(2:size(grad)) + (lambda/m) * theta(2:size(theta), :);
 
 
 
